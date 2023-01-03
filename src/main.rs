@@ -8,8 +8,10 @@ const EPSILON: f32 = 0.0001;
 fn main() {
     let width = 1280;
     let height = 800;
-    //camera
+
     let sdf = sdfu::Sphere::new(1.0).translate(Vec3A::new(0.0, 0.0, 2.0));
+
+    //camera
     let aspect_ratio = width as f32 / height as f32;
     let eye = Vec3A::new(0.0, 0.0, -1.0);
     let up = Vec3A::new(0.0, -1.0, 0.0);
@@ -31,9 +33,8 @@ fn main() {
             let direction = (origin - eye).normalize();
             let mut t = 0.0;
 
+            //colors and shading
             let light_dir = Vec3A::new(-0.8, -1.0, 0.0).normalize();
-
-            //colors
             let mut color = Vec3A::splat(0.0);
             let sky_color =
                 Vec3A::new(1.0, 1.0, 1.0).lerp(Vec3A::new(0.6, 0.8, 0.9), uv.y * 0.5 + 1.2);
@@ -53,10 +54,8 @@ fn main() {
                 } else {
                     color = sky_color;
                 }
-
                 t += distance;
             }
-
             color
         })
         .collect::<Vec<Vec3A>>();
